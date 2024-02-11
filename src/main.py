@@ -1,5 +1,5 @@
 import sys
-import time
+# import time
 # from PyQt5.QtCore import *
 from PySide6.QtGui import *
 from PySide6.QtWidgets import *
@@ -23,10 +23,32 @@ class TimeBlockLayout(QWidget):
 
         # Add time blocks (placeholder)
         # Replace this with your logic to create and add time block widgets
+            
+    # Create empty time block widgets (placeholder)
+        self.time_blocks = [[None for _ in range(7)] for _ in range(24)]
+        for hour in range(24):
+            for day in range(7):
+                self.time_blocks[hour][day] = QLineEdit("")
+                self.time_blocks[hour][day].setStyleSheet("background-color: white")
+                self.grid_layout.addWidget(self.time_blocks[hour][day], hour, day + 1)
 
-if __name__ == "__main__":
+    def set_time_block(self, hour, day, text, color="#ffffff"):
+        """Sets the text and color of a specific time block."""
+        if 0 <= hour < 24 and 0 <= day < 7:
+            self.time_blocks[hour][day].setText(text)
+            self.time_blocks[hour][day].setStyleSheet(f"background-color: {color}")
+
+if __name__ == "__main__":  
     app = QApplication(sys.argv)
     window = TimeBlockLayout()
+
+    # Set some example time blocks
+    window.set_time_block(9, 0, "Meeting", "#ff9999")
+    window.set_time_block(14, 3, "Lunch break", "#99ff99")
+    window.set_time_block(19, 5, "Workout", "#99ccff")
+    window.set_time_block(17, 4, "Workout2", "#99ccff")
+
+
     window.show()
     sys.exit(app.exec())
 
