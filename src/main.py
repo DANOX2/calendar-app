@@ -1,6 +1,6 @@
 import sys
 # import time
-# from PyQt5.QtCore import *
+from PySide6.QtCore import *
 from PySide6.QtGui import *
 from PySide6.QtWidgets import *
 
@@ -10,6 +10,9 @@ class TimeBlockLayout(QWidget):
 
         self.grid_layout = QGridLayout(self)
         self.setLayout(self.grid_layout)
+        
+
+        button = QPushButton("Click me")
 
         # Add days of the week labels
         for i, day in enumerate(["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]):
@@ -28,7 +31,7 @@ class TimeBlockLayout(QWidget):
         self.time_blocks = [[None for _ in range(7)] for _ in range(24)]
         for hour in range(24):
             for day in range(7):
-                self.time_blocks[hour][day] = QLineEdit("")
+                self.time_blocks[hour][day] = QLineEdit("") # Change line edit for something else qframe
                 self.time_blocks[hour][day].setStyleSheet("background-color: white")
                 self.grid_layout.addWidget(self.time_blocks[hour][day], hour, day + 1)
 
@@ -37,6 +40,11 @@ class TimeBlockLayout(QWidget):
         if 0 <= hour < 24 and 0 <= day < 7:
             self.time_blocks[hour][day].setText(text)
             self.time_blocks[hour][day].setStyleSheet(f"background-color: {color}")
+
+    @Slot()
+    def say_hello():
+        print("Button clicked, Hello!")
+    
 
 if __name__ == "__main__":  
     app = QApplication(sys.argv)
@@ -47,7 +55,8 @@ if __name__ == "__main__":
     window.set_time_block(14, 3, "Lunch break", "#99ff99")
     window.set_time_block(19, 5, "Workout", "#99ccff")
     window.set_time_block(17, 4, "Workout2", "#99ccff")
-
+    
+    button = QPushButton("Click me")
 
     window.show()
     sys.exit(app.exec())
